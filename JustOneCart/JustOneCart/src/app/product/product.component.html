@@ -1,0 +1,52 @@
+<div class="container">  
+  
+    <mat-card>  
+        <mat-card-content>
+            <div align="center" style="color:black;text-align: left;">  
+                Just One Cart CSV Record List
+              </div> 
+            <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />    
+<nav>
+            <table class="table" style="cursor:pointer">  
+                <tr ngclass="btn-primary">  
+                  <th class="tbl2">OrderID </th>  
+                  <th class="tbl2">InternalItemNumber  </th>  
+                  <th class="tbl2">Quantity  </th>    
+                </tr>  
+                <tr *ngFor="let product of allOrders | async" [routerLink]="['/detail', product.OrderId]"> 
+                  <td class="tbl2" >{{product.OrderId}}</td> 
+                  <td class="tbl2" >{{product.InternalItemNumber}}</td>  
+                  <td class="tbl2" >{{product.Quantity}}</td> 
+                </tr>  
+        
+              </table> 
+            </nav>
+              <router-outlet></router-outlet>
+      <mat-toolbar color="accent">  
+        <div align="center" style="color:black;text-align:left;">  
+          Just One Cart
+        </div>    
+      </mat-toolbar>  
+   
+          <table class="table" >  
+              <tr ngclass="btn-primary">  
+                <th class="tbl2">ID</th> 
+                <th class="tbl2">Internal Item Number  </th>  
+                <th class="tbl2">Manufacturer SKU  </th>  
+                <th class="tbl2">Price Range  </th>  
+                <th class="tbl2">PreferredStore  </th>   
+              </tr>  
+              <tr *ngFor="let product of allProducts | async">  
+                <td class="tbl2">{{product.ID}}</td> 
+                <td class="tbl2">{{product.InternalItemNumber}}</td>  
+                <td class="tbl2">{{product.ManufacturerSKU}}</td>  
+                <td class="tbl2">{{product.PriceRange}}</td>  
+                <td class="tbl2">{{product.PreferredStore}}</td> 
+                 
+              </tr>  
+      
+            </table>  
+    
+      </mat-card-content>  
+    </mat-card>  
+    </div>  

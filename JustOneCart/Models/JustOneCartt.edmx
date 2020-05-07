@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JustOneCartModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aisle">
+          <Key>
+            <PropertyRef Name="AisleId" />
+          </Key>
+          <Property Name="AisleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InternalItemNumber" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ManufacturerSKU" Type="varchar" MaxLength="255" />
+          <Property Name="PriceRange" Type="varchar" MaxLength="50" />
+          <Property Name="PreferredStore" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ProductDailyRequest">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MemberId" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InternalItemNumber" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductPurchaseLog">
+          <Key>
+            <PropertyRef Name="PurchaseLogId" />
+          </Key>
+          <Property Name="PurchaseLogId" Type="int" Nullable="false" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="AisleId" Type="int" />
+          <Property Name="SideId" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="Side">
+          <Key>
+            <PropertyRef Name="SideId" />
+          </Key>
+          <Property Name="SideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="AisleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar(max)" />
+          <Property Name="Address2" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoursOfOperation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="AisleId">
+          <End Role="Aisle" Type="Self.Aisle" Multiplicity="0..1" />
+          <End Role="Side" Type="Self.Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDailyRequest_Product">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="ProductDailyRequest" Type="Self.ProductDailyRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ProductDailyRequest">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Aisle">
+          <End Role="Aisle" Type="Self.Aisle" Multiplicity="0..1" />
+          <End Role="ProductPurchaseLog" Type="Self.ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductPurchaseLog" Type="Self.ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Side">
+          <End Role="Side" Type="Self.Side" Multiplicity="0..1" />
+          <End Role="ProductPurchaseLog" Type="Self.ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Side">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="ProductPurchaseLog" Type="Self.ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StoreId">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Aisle" Type="Self.Aisle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Aisle">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JustOneCartModel1StoreContainer">
+          <EntitySet Name="Aisle" EntityType="Self.Aisle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductDailyRequest" EntityType="Self.ProductDailyRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductOrder" EntityType="Self.ProductOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductPurchaseLog" EntityType="Self.ProductPurchaseLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Side" EntityType="Self.Side" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="AisleId" Association="Self.AisleId">
+            <End Role="Aisle" EntitySet="Aisle" />
+            <End Role="Side" EntitySet="Side" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDailyRequest_Product" Association="Self.FK_ProductDailyRequest_Product">
+            <End Role="User" EntitySet="User" />
+            <End Role="ProductDailyRequest" EntitySet="ProductDailyRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Aisle" Association="Self.FK_ProductPurchaseLog_Aisle">
+            <End Role="Aisle" EntitySet="Aisle" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Product" Association="Self.FK_ProductPurchaseLog_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Side" Association="Self.FK_ProductPurchaseLog_Side">
+            <End Role="Side" EntitySet="Side" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Store" Association="Self.FK_ProductPurchaseLog_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLog" />
+          </AssociationSet>
+          <AssociationSet Name="StoreId" Association="Self.StoreId">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Aisle" EntitySet="Aisle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JustOneCartModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InternalItemNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManufacturerSKU" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PriceRange" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PreferredStore" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductDailyRequests" Relationship="JustOneCartModel1.FK_ProductDailyRequest_Product" FromRole="Product" ToRole="ProductDailyRequest" />
+          <NavigationProperty Name="ProductPurchaseLogs" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Product" FromRole="Product" ToRole="ProductPurchaseLog" />
+        </EntityType>
+        <EntityType Name="ProductOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InternalItemNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="JustOneCartEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductOrders" EntityType="Self.ProductOrder" />
+          <EntitySet Name="Aisles" EntityType="JustOneCartModel1.Aisle" />
+          <EntitySet Name="Stores" EntityType="JustOneCartModel1.Store" />
+          <AssociationSet Name="StoreId" Association="JustOneCartModel1.StoreId">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Aisle" EntitySet="Aisles" />
+          </AssociationSet>
+          <EntitySet Name="ProductDailyRequests" EntityType="JustOneCartModel1.ProductDailyRequest" />
+          <EntitySet Name="ProductPurchaseLogs" EntityType="JustOneCartModel1.ProductPurchaseLog" />
+          <EntitySet Name="Sides" EntityType="JustOneCartModel1.Side" />
+          <AssociationSet Name="AisleId" Association="JustOneCartModel1.AisleId">
+            <End Role="Aisle" EntitySet="Aisles" />
+            <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Aisle" Association="JustOneCartModel1.FK_ProductPurchaseLog_Aisle">
+            <End Role="Aisle" EntitySet="Aisles" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDailyRequest_Product" Association="JustOneCartModel1.FK_ProductDailyRequest_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductDailyRequest" EntitySet="ProductDailyRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Product" Association="JustOneCartModel1.FK_ProductPurchaseLog_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Side" Association="JustOneCartModel1.FK_ProductPurchaseLog_Side">
+            <End Role="Side" EntitySet="Sides" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductPurchaseLog_Store" Association="JustOneCartModel1.FK_ProductPurchaseLog_Store">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLogs" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="JustOneCartModel1.User" />
+          <AssociationSet Name="FK_ProductDailyRequest_Product1" Association="JustOneCartModel1.FK_ProductDailyRequest_Product1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProductDailyRequest" EntitySet="ProductDailyRequests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Aisle">
+          <Key>
+            <PropertyRef Name="AisleId" />
+          </Key>
+          <Property Name="AisleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Store" Relationship="JustOneCartModel1.StoreId" FromRole="Aisle" ToRole="Store" />
+          <NavigationProperty Name="Sides" Relationship="JustOneCartModel1.AisleId" FromRole="Aisle" ToRole="Side" />
+          <NavigationProperty Name="ProductPurchaseLogs" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Aisle" FromRole="Aisle" ToRole="ProductPurchaseLog" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HoursOfOperation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Aisles" Relationship="JustOneCartModel1.StoreId" FromRole="Store" ToRole="Aisle" />
+          <NavigationProperty Name="ProductPurchaseLogs" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Store" FromRole="Store" ToRole="ProductPurchaseLog" />
+        </EntityType>
+        <Association Name="StoreId">
+          <End Type="JustOneCartModel1.Store" Role="Store" Multiplicity="1" />
+          <End Type="JustOneCartModel1.Aisle" Role="Aisle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Aisle">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductDailyRequest">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="MemberName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="JustOneCartModel1.FK_ProductDailyRequest_Product" FromRole="ProductDailyRequest" ToRole="Product" />
+          <Property Name="MemberId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="JustOneCartModel1.FK_ProductDailyRequest_Product1" FromRole="ProductDailyRequest" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ProductPurchaseLog">
+          <Key>
+            <PropertyRef Name="PurchaseLogId" />
+          </Key>
+          <Property Name="PurchaseLogId" Type="Int32" Nullable="false" />
+          <Property Name="StoreId" Type="Int32" />
+          <Property Name="AisleId" Type="Int32" />
+          <Property Name="SideId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Count" Type="Int32" />
+          <NavigationProperty Name="Aisle" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Aisle" FromRole="ProductPurchaseLog" ToRole="Aisle" />
+          <NavigationProperty Name="Product" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Product" FromRole="ProductPurchaseLog" ToRole="Product" />
+          <NavigationProperty Name="Side" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Side" FromRole="ProductPurchaseLog" ToRole="Side" />
+          <NavigationProperty Name="Store" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Store" FromRole="ProductPurchaseLog" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Side">
+          <Key>
+            <PropertyRef Name="SideId" />
+          </Key>
+          <Property Name="SideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AisleId" Type="Int32" />
+          <NavigationProperty Name="Aisle" Relationship="JustOneCartModel1.AisleId" FromRole="Side" ToRole="Aisle" />
+          <NavigationProperty Name="ProductPurchaseLogs" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Side" FromRole="Side" ToRole="ProductPurchaseLog" />
+        </EntityType>
+        <Association Name="AisleId">
+          <End Type="JustOneCartModel1.Aisle" Role="Aisle" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Aisle">
+          <End Type="JustOneCartModel1.Aisle" Role="Aisle" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.ProductPurchaseLog" Role="ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDailyRequest_Product">
+          <End Type="JustOneCartModel1.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.ProductDailyRequest" Role="ProductDailyRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductDailyRequest">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Product">
+          <End Type="JustOneCartModel1.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.ProductPurchaseLog" Role="ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Side">
+          <End Type="JustOneCartModel1.Side" Role="Side" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.ProductPurchaseLog" Role="ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Side">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductPurchaseLog_Store">
+          <End Type="JustOneCartModel1.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.ProductPurchaseLog" Role="ProductPurchaseLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="ProductPurchaseLog">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductDailyRequests" Relationship="JustOneCartModel1.FK_ProductDailyRequest_Product1" FromRole="User" ToRole="ProductDailyRequest" />
+        </EntityType>
+        <Association Name="FK_ProductDailyRequest_Product1">
+          <End Type="JustOneCartModel1.User" Role="User" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.ProductDailyRequest" Role="ProductDailyRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ProductDailyRequest">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JustOneCartModel1StoreContainer" CdmEntityContainer="JustOneCartEntities1">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="JustOneCartModel1.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="InternalItemNumber" ColumnName="InternalItemNumber" />
+                <ScalarProperty Name="ManufacturerSKU" ColumnName="ManufacturerSKU" />
+                <ScalarProperty Name="PriceRange" ColumnName="PriceRange" />
+                <ScalarProperty Name="PreferredStore" ColumnName="PreferredStore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductOrders">
+            <EntityTypeMapping TypeName="JustOneCartModel1.ProductOrder">
+              <MappingFragment StoreEntitySet="ProductOrder">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="InternalItemNumber" ColumnName="InternalItemNumber" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aisles">
+            <EntityTypeMapping TypeName="JustOneCartModel1.Aisle">
+              <MappingFragment StoreEntitySet="Aisle">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="JustOneCartModel1.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="HoursOfOperation" ColumnName="HoursOfOperation" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductDailyRequests">
+            <EntityTypeMapping TypeName="JustOneCartModel1.ProductDailyRequest">
+              <MappingFragment StoreEntitySet="ProductDailyRequest">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPurchaseLogs">
+            <EntityTypeMapping TypeName="JustOneCartModel1.ProductPurchaseLog">
+              <MappingFragment StoreEntitySet="ProductPurchaseLog">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="SideId" ColumnName="SideId" />
+                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="PurchaseLogId" ColumnName="PurchaseLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sides">
+            <EntityTypeMapping TypeName="JustOneCartModel1.Side">
+              <MappingFragment StoreEntitySet="Side">
+                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SideId" ColumnName="SideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="JustOneCartModel1.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

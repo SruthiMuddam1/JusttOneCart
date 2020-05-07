@@ -1,0 +1,10 @@
+
+  <div>
+    <div *ngIf="order | async as order">
+      <p>Name: <span>{{ order.OrderId }}</span></p>
+      <br/>
+      <p>InternalItemNumber: <span>{{ order.InternalItemNumber }}</span></p>
+      <br/>
+      <p>Quantity: <span>{{ order.Quantity }}</span></p>
+    </div>
+  </div>
