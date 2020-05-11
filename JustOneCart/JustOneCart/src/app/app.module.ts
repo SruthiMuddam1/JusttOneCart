@@ -12,18 +12,19 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductComponent } from './product/product.component';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
-    OrderdetailsComponent
+    OrderdetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

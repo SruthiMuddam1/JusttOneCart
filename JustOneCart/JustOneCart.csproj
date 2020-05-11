@@ -173,10 +173,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductOrdersController.cs" />
+    <Compile Include="Controllers\user1Controller.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InputModels\Login.cs" />
     <Compile Include="Models\Aisle.cs">
       <DependentUpon>JustOneCartt.tt</DependentUpon>
     </Compile>
@@ -214,6 +216,9 @@
       <DependentUpon>JustOneCartt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>JustOneCartt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user1.cs">
       <DependentUpon>JustOneCartt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -7552,6 +7557,8 @@
     <TypeScriptCompile Include="JustOneCart\src\app\app.module.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\csvrecord.spec.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\csvrecord.ts" />
+    <TypeScriptCompile Include="JustOneCart\src\app\models\csvrecord.ts" />
+    <TypeScriptCompile Include="JustOneCart\src\app\models\product.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\orderdetails.service.spec.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\orderdetails.service.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\orderdetails\orderdetails.component.spec.ts" />
@@ -7562,6 +7569,8 @@
     <TypeScriptCompile Include="JustOneCart\src\app\product.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\product\product.component.spec.ts" />
     <TypeScriptCompile Include="JustOneCart\src\app\product\product.component.ts" />
+    <TypeScriptCompile Include="JustOneCart\src\app\services\orderdetails.service.ts" />
+    <TypeScriptCompile Include="JustOneCart\src\app\services\product.service.ts" />
     <TypeScriptCompile Include="JustOneCart\src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="JustOneCart\src\environments\environment.ts" />
     <TypeScriptCompile Include="JustOneCart\src\main.ts" />

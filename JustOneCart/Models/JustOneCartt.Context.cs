@@ -33,5 +33,6 @@ namespace JustOneCart.Models
         public virtual DbSet<ProductPurchaseLog> ProductPurchaseLogs { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<user1> users1 { get; set; }
     }
 }

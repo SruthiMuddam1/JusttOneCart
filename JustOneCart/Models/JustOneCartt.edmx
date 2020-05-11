@@ -83,6 +83,19 @@
           <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
           <Property Name="Role" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="255" />
+          <Property Name="lastName" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="userrole" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="GUid" Type="varchar" MaxLength="255" />
+          <Property Name="token" Type="varchar" MaxLength="255" />
+        </EntityType>
         <Association Name="AisleId">
           <End Role="Aisle" Type="Self.Aisle" Multiplicity="0..1" />
           <End Role="Side" Type="Self.Side" Multiplicity="*" />
@@ -176,6 +189,7 @@
           <EntitySet Name="Side" EntityType="Self.Side" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="AisleId" Association="Self.AisleId">
             <End Role="Aisle" EntitySet="Aisle" />
             <End Role="Side" EntitySet="Side" />
@@ -270,6 +284,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="ProductDailyRequest" EntitySet="ProductDailyRequests" />
           </AssociationSet>
+          <EntitySet Name="users1" EntityType="JustOneCartModel1.user1" />
         </EntityContainer>
         <EntityType Name="Aisle">
           <Key>
@@ -441,6 +456,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="user1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="userrole" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="GUid" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -530,6 +558,20 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users1">
+            <EntityTypeMapping TypeName="JustOneCartModel1.user1">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="GUid" ColumnName="GUid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userrole" ColumnName="userrole" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

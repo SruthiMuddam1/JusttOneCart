@@ -1,9 +1,10 @@
 import { Component, OnInit , ViewChild} from '@angular/core';  
 import { FormBuilder, Validators } from '@angular/forms';  
 import { Observable } from 'rxjs';  
-import { CSVRecord } from '../csvrecord';  
+import { CSVRecord } from '../models/csvrecord';  
 import { ProductService } from '../product.service';  
-import { Product } from '../product';  
+import { Product } from '../models/product'; 
+import { Router } from '@angular/router'; 
 
   
 @Component({  
@@ -19,7 +20,7 @@ export class ProductComponent implements OnInit {
   ProductIdUpdate = null;  
   message = null;  
   
-  constructor(private formbulider: FormBuilder, private productService:ProductService) { }  
+  constructor(private formbulider: FormBuilder, private productService:ProductService, private router: Router) { }  
   
   ngOnInit() {  
     this.ProductForm = this.formbulider.group({  
