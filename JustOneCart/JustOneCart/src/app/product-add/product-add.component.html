@@ -1,0 +1,56 @@
+
+  <mat-card>
+
+    <div style="width:90%">
+        <h1 class="text-lg-center">Add Product Details</h1>
+    </div>
+    <form [formGroup]="itemForm" class="kt-form kt-form--group-seperator-dashed">
+
+
+        <div class="row" >
+
+            <div class="col-md-2 kt-margin-bottom-10-mobile">
+              <mat-form-field class="mat-form-field-fluid">
+                <input matInput placeholder="Internal Item Number" formControlName="InternalItemNumber">
+              
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-2 kt-margin-bottom-10-mobile">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input matInput placeholder="Description" formControlName="Description">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2 kt-margin-bottom-10-mobile">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input matInput placeholder="Manufacturer SKU" formControlName="ManufacturerSKU">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2 kt-margin-bottom-10-mobile">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input matInput placeholder="Preferred Store" formControlName="PreferredStore">
+                </mat-form-field>
+              </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click) = add()>Add Product</button>
+   
+        <h3 class="text-lg-center" >{{update}}</h3>
+    </form>
+     <!--
+    <mat-card-content *ngIf="product | async as product">
+      <p>Name: <span>{{ product.ID }}</span></p>
+      <br/>
+      <p>InternalItemNumber: <span>{{ product.InternalItemNumber }}</span></p>
+      <br/>
+      <p>Description: <span>{{ product.Description }}</span></p>
+      <br/>
+      <p>ManufacturerSKU: <span>{{ product.ManufacturerSKU }}</span></p>
+      <br/>
+      <p>PriceRange: <span>{{ product.PriceRange }}</span></p>
+      <br/>
+      <p>PreferredStore: <span>{{ product.PreferredStore }}</span></p>
+    </mat-card-content> -->
+  </mat-card>

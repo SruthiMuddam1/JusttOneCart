@@ -19,6 +19,7 @@ namespace JustOneCart.Models
         {
             this.ProductDailyRequests = new HashSet<ProductDailyRequest>();
             this.ProductPurchaseLogs = new HashSet<ProductPurchaseLog>();
+            this.Stores = new HashSet<Store>();
         }
     
         public int ID { get; set; }
@@ -26,10 +27,14 @@ namespace JustOneCart.Models
         public string ManufacturerSKU { get; set; }
         public string PriceRange { get; set; }
         public string PreferredStore { get; set; }
+        public string Description { get; set; }
+        public string StoreName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductDailyRequest> ProductDailyRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductPurchaseLog> ProductPurchaseLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Store> Stores { get; set; }
     }
 }

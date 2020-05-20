@@ -22,7 +22,11 @@ export class ProductComponent implements OnInit {
   
   constructor(private formbulider: FormBuilder, private productService:ProductService, private router: Router) { }  
   
-  ngOnInit() {  
+  
+displayedColumns = ["ID", "InternalItemNumber", "ManufacturerSKU", "PriceRange", "PreferredStore", "Modify"];
+displayedOrders = ["InternalItemNumber", "Quantity"];
+    
+ngOnInit() {  
     this.ProductForm = this.formbulider.group({  
       ID: Number, 
       InternalItemNumber: String,  
@@ -40,6 +44,14 @@ export class ProductComponent implements OnInit {
   loadAllOrders()
   {
     this.allOrders = this.productService.getOrderDetails();
+  }
+  edit(item: Product)
+  {
+    this.router.navigate(['/productdetail', item.ID]);
+  }
+  add()
+  {
+    this.router.navigate(['/productAdd']);
   }
   onFormSubmit() {  
     this.dataSaved = false;  

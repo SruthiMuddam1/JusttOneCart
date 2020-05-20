@@ -22,6 +22,7 @@
         <EntityTypeShape EntityType="JustOneCartModel1.User" Width="1.5" PointX="5.375" PointY="8" />
         <AssociationConnector Association="JustOneCartModel1.FK_ProductDailyRequest_Product1" />
         <EntityTypeShape EntityType="JustOneCartModel1.user1" Width="1.5" PointX="7.375" PointY="6.75" />
+        <AssociationConnector Association="JustOneCartModel1.FK_Store_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

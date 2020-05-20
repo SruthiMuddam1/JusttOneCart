@@ -4,4 +4,6 @@ export class Product {
     ManufacturerSKU: string;  
     PriceRange: string;  
     PreferredStore: string; 
+    Description : string;
+    StoreName : string;
 }

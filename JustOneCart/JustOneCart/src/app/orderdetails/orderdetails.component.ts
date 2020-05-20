@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { OrderdetailsService } from '../orderdetails.service'; 
-import { CSVRecord } from '../csvrecord';
+import { CSVRecord } from '../models/csvrecord';
 import { Observable } from 'rxjs';  
 
 @Component({
@@ -19,8 +19,8 @@ export class OrderdetailsComponent implements OnInit {
    
   ngOnInit(): void { 
     this.route.params.forEach((params: CSVRecord) => {
-    if (params['OrderId'] != undefined) {
-      let id = +params['OrderId'];
+    if (params['ID'] != undefined) {
+      let id = +params['ID'];
      this.order = this.orderservice.getOrderDetailsbyId(id);
     } 
   });

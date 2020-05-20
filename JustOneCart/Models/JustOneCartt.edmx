@@ -22,6 +22,8 @@
           <Property Name="ManufacturerSKU" Type="varchar" MaxLength="255" />
           <Property Name="PriceRange" Type="varchar" MaxLength="50" />
           <Property Name="PreferredStore" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ProductDailyRequest">
           <Key>
@@ -71,6 +73,7 @@
           <Property Name="Address2" Type="nvarchar(max)" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="HoursOfOperation" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductId" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -168,15 +171,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="StoreId">
-          <End Role="Store" Type="Self.Store" Multiplicity="1" />
-          <End Role="Aisle" Type="Self.Aisle" Multiplicity="*" />
+        <Association Name="FK_Store_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Store">
-              <PropertyRef Name="StoreId" />
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Aisle">
-              <PropertyRef Name="StoreId" />
+            <Dependent Role="Store">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -214,9 +217,9 @@
             <End Role="Store" EntitySet="Store" />
             <End Role="ProductPurchaseLog" EntitySet="ProductPurchaseLog" />
           </AssociationSet>
-          <AssociationSet Name="StoreId" Association="Self.StoreId">
+          <AssociationSet Name="FK_Store_Product" Association="Self.FK_Store_Product">
+            <End Role="Product" EntitySet="Product" />
             <End Role="Store" EntitySet="Store" />
-            <End Role="Aisle" EntitySet="Aisle" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -234,6 +237,9 @@
           <Property Name="PreferredStore" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductDailyRequests" Relationship="JustOneCartModel1.FK_ProductDailyRequest_Product" FromRole="Product" ToRole="ProductDailyRequest" />
           <NavigationProperty Name="ProductPurchaseLogs" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Product" FromRole="Product" ToRole="ProductPurchaseLog" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StoreName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Stores" Relationship="JustOneCartModel1.FK_Store_Product" FromRole="Product" ToRole="Store" />
         </EntityType>
         <EntityType Name="ProductOrder">
           <Key>
@@ -285,6 +291,10 @@
             <End Role="ProductDailyRequest" EntitySet="ProductDailyRequests" />
           </AssociationSet>
           <EntitySet Name="users1" EntityType="JustOneCartModel1.user1" />
+          <AssociationSet Name="FK_Store_Product" Association="JustOneCartModel1.FK_Store_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Aisle">
           <Key>
@@ -309,6 +319,8 @@
           <Property Name="HoursOfOperation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Aisles" Relationship="JustOneCartModel1.StoreId" FromRole="Store" ToRole="Aisle" />
           <NavigationProperty Name="ProductPurchaseLogs" Relationship="JustOneCartModel1.FK_ProductPurchaseLog_Store" FromRole="Store" ToRole="ProductPurchaseLog" />
+          <Property Name="ProductId" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="JustOneCartModel1.FK_Store_Product" FromRole="Store" ToRole="Product" />
         </EntityType>
         <Association Name="StoreId">
           <End Type="JustOneCartModel1.Store" Role="Store" Multiplicity="1" />
@@ -469,6 +481,18 @@
           <Property Name="GUid" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="FK_Store_Product">
+          <End Type="JustOneCartModel1.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="JustOneCartModel1.Store" Role="Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -478,6 +502,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="JustOneCartModel1.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="InternalItemNumber" ColumnName="InternalItemNumber" />
                 <ScalarProperty Name="ManufacturerSKU" ColumnName="ManufacturerSKU" />
@@ -507,6 +533,7 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="JustOneCartModel1.Store">
               <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="HoursOfOperation" ColumnName="HoursOfOperation" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Address2" ColumnName="Address2" />

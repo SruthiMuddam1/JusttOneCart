@@ -111,6 +111,10 @@ namespace CRUDAPI.Controllers
                 objProd = objEntity.Products.Find(product.ID);
                 if (objProd != null)
                 {
+                    objProd.InternalItemNumber = product.InternalItemNumber;
+                    objProd.ManufacturerSKU = product.ManufacturerSKU;
+                    objProd.Description = product.Description;
+                    objProd.PreferredStore = product.PreferredStore;
                     //objProd.EmpName = employee.EmpName;
                     //objEmp.Address = employee.Address;
                     //objEmp.EmailId = employee.EmailId;

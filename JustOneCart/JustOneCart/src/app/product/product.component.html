@@ -1,51 +1,90 @@
 <div class="container">  
   
     <mat-card>  
-        <mat-card-content>
-            <div align="center" style="color:black;text-align: left;">  
-                Just One Cart CSV Record List
-              </div> 
-            <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />    
-<nav>
-            <table class="table" style="cursor:pointer">  
-                <tr ngclass="btn-primary">  
-                  <th class="tbl2">OrderID </th>  
-                  <th class="tbl2">InternalItemNumber  </th>  
-                  <th class="tbl2">Quantity  </th>    
-                </tr>  
-                <tr *ngFor="let product of allOrders | async" [routerLink]="['/detail', product.OrderId]"> 
-                  <td class="tbl2" >{{product.OrderId}}</td> 
-                  <td class="tbl2" >{{product.InternalItemNumber}}</td>  
-                  <td class="tbl2" >{{product.Quantity}}</td> 
-                </tr>  
+        <mat-card-content> 
+          <mat-card align="center" style="background-color: blue;color: white;text-align: left;">  
+            Product Details :
+            <button mat-raised-button color="warn" (click)=add()>Add</button>
+          </mat-card> 
+          <mat-table class="lessons-table mat-elevation-z8" [dataSource]="allProducts">
+
+            <ng-container matColumnDef="ID">
+                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                <mat-cell *matCellDef="let lesson">{{lesson.ID}}</mat-cell>
+            </ng-container>
         
-              </table> 
-            </nav>
+            <ng-container matColumnDef="InternalItemNumber">
+                <mat-header-cell *matHeaderCellDef>Internal Item Number</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let lesson">{{lesson.InternalItemNumber}}</mat-cell>
+        
+            </ng-container>
+        
+            <ng-container matColumnDef="ManufacturerSKU">
+                <mat-header-cell *matHeaderCellDef>Manufacturer SKU</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let lesson">{{lesson.ManufacturerSKU}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="PriceRange">
+              <mat-header-cell *matHeaderCellDef>Price Range</mat-header-cell>
+              <mat-cell class="duration-cell"
+                        *matCellDef="let lesson">{{lesson.PriceRange}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="PreferredStore">
+            <mat-header-cell *matHeaderCellDef>Preferred Store</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let lesson">{{lesson.PreferredStore}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Modify">
+          <mat-header-cell *matHeaderCellDef> Modify </mat-header-cell>
+          <mat-cell *matCellDef="let lesson"> 
+          <span style="cursor:pointer;" (click)="edit(lesson)">
+                Modify</span>  </mat-cell>
+        </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>        
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        
+        </mat-table>
+          <p></p>
+                <p></p><p></p>
+            <mat-card align="center" style="background-color: blue;color: white;text-align: left;">  
+                Just One Cart CSV Record List :
+              </mat-card> 
+              <p></p>
+            <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />    
+<p></p>
+
+
+
+
+
+
+
+
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="allOrders">
+
+  <ng-container matColumnDef="InternalItemNumber">
+      <mat-header-cell *matHeaderCellDef>Internal Item Number</mat-header-cell>
+      <mat-cell class="description-cell"
+                *matCellDef="let lesson">{{lesson.InternalItemNumber}}</mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="Quantity">
+    <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+    <mat-cell class="description-cell"
+              *matCellDef="let lesson">{{lesson.Quantity}}</mat-cell>
+
+</ng-container>
+
+
+ 
+  <mat-header-row *matHeaderRowDef="displayedOrders"></mat-header-row>        
+  <mat-row *matRowDef="let row; columns: displayedOrders"></mat-row>
+
+</mat-table>
               <router-outlet></router-outlet>
-      <mat-toolbar color="accent">  
-        <div align="center" style="color:black;text-align:left;">  
-          Just One Cart
-        </div>    
-      </mat-toolbar>  
-   
-          <table class="table" >  
-              <tr ngclass="btn-primary">  
-                <th class="tbl2">ID</th> 
-                <th class="tbl2">Internal Item Number  </th>  
-                <th class="tbl2">Manufacturer SKU  </th>  
-                <th class="tbl2">Price Range  </th>  
-                <th class="tbl2">PreferredStore  </th>   
-              </tr>  
-              <tr *ngFor="let product of allProducts | async">  
-                <td class="tbl2">{{product.ID}}</td> 
-                <td class="tbl2">{{product.InternalItemNumber}}</td>  
-                <td class="tbl2">{{product.ManufacturerSKU}}</td>  
-                <td class="tbl2">{{product.PriceRange}}</td>  
-                <td class="tbl2">{{product.PreferredStore}}</td> 
-                 
-              </tr>  
       
-            </table>  
     
       </mat-card-content>  
     </mat-card>  

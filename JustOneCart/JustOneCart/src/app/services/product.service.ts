@@ -15,9 +15,17 @@ export class ProductService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.url + 'Api/Product/AllProducts');  
   }  
+  addProduct(item : Product):Observable<Product>{
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) }; 
+    return this.http.post<Product>(this.url+'Api/Product/InsertProductDetails/',item,httpOptions);
+  }
   getProductById(ID: Number): Observable<Product> {  
     return this.http.get<Product>(this.url + 'Api/Product/GetProductDetailsById/' + ID);  
   }  
+  editProductById(item : Product):Observable<Product>{
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) }; 
+    return this.http.put<Product>(this.url+'Api/Product/UpdateProductDetails/',item,httpOptions);
+  }
   createOrder(csvrecord: CSVRecord): Observable<CSVRecord> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
     return this.http.post<CSVRecord>(this.url+'api/ProductOrders',  

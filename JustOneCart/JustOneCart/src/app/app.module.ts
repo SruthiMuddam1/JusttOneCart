@@ -11,6 +11,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatTableModule} from '@angular/material/table';
+import{MatInputModule} from '@angular/material/input'
+import{MatFormFieldModule} from '@angular/material/form-field';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
 import { AppRoutingModule } from './app-routing.module';
@@ -18,13 +20,18 @@ import { AppComponent } from './app.component';
 import { ProductComponent } from './product/product.component';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
 import { LoginComponent } from './login/login.component';
+import { from } from 'rxjs';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductAddComponent } from './product-add/product-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
     OrderdetailsComponent,
-    LoginComponent
+    LoginComponent,
+    ProductDetailsComponent,
+    ProductAddComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +41,9 @@ import { LoginComponent } from './login/login.component';
     MatTabsModule,ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatFormFieldModule,
     HttpClientModule,
+    MatInputModule,
     MatMenuModule,
     MatCardModule,
     MatToolbarModule,
